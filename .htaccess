@@ -4,8 +4,21 @@
 
     RewriteEngine On
     #RewriteBase /path/to/app
+
+    # rewrite some base files to the /web folder if they don't exist in the root
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_URI} ^/favicon\.ico$ [OR]
+    RewriteCond %{REQUEST_URI} ^/apple-touch-icon.*\.png$ [OR]
+    RewriteCond %{REQUEST_URI} ^/crossdomain\.xml$ [OR]
+    RewriteCond %{REQUEST_URI} ^/humans\.txt$ [OR]
+    RewriteCond %{REQUEST_URI} ^/robots\.txt$ [OR]
+    RewriteCond %{REQUEST_URI} ^/(js|images|css)/.*$
+    RewriteRule ^(.*)$ /web/$1 [QSA,L]
+
+    # run everything else through index.php
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^(.*)$ index.php [QSA,L]
+    
 </IfModule>
 
 
