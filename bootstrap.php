@@ -13,6 +13,10 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 $app = new Silex\Application();
 
+// set debuggin mode if localhost
+if ($_SERVER['REMOTE_ADDR'] == "127.0.0.1")
+  $app['debug'] = true;
+
 // register database
 $app->register(new Silex\Extension\DoctrineExtension(), array(
     'db.options' => array(
@@ -37,7 +41,9 @@ $app->register(new Silex\Extension\TwigExtension(), array(
 ));
 
 // handle errors
-$app->error(function (\Exception $e) {
+$app->error(function (\Exception $e) use ($app) {
+    if ($app['debug']) return;
+    
     if ($e instanceof NotFoundHttpException) {
       if ($file = @file_get_contents(__DIR__."/web/404.html"))
         return new Response($file, 404, array('Content-Type' => 'text/html'));
