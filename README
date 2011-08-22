@@ -3,3 +3,4 @@ This is an boilerplate using Silex and the html5 boilderplate http://html5boiler
 Silex         - php microframework http://silex-project.org/
 Doctrine DBAL - database abstraction http://www.doctrine-project.org/
 Twig          - php templating engine http://www.twig-project.org/
+simpletest    - unit testing for php http://www.simpletest.org/
